@@ -1,0 +1,1 @@
+mpic++ -std=c++0x SimLYM.cpp SimCtrl.cpp Interface_Pardiso.cpp CMatrixBlock.cpp CPardisoSolver.cpp CSchedule.cpp CStandardWell.cpp CState.cpp CSTDProdWell.cpp CSTDWInjWell.cpp -o SimLYM -I ../mkl/include -I ../include  -Wl,--start-group ../mkl/lib/libmkl_intel_ilp64.a ../mkl/lib/libmkl_core.a ../mkl/lib/libmkl_sequential.a -Wl,--end-group -lpthread -lm

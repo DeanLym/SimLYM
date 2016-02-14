@@ -1,0 +1,1 @@
+icpc -std=c++0x SimLYM.cpp SimCtrl.cpp Interface_Pardiso.cpp CMatrixBlock.cpp CPardisoSolver.cpp CSchedule.cpp CStandardWell.cpp CState.cpp CSTDProdWell.cpp CSTDWInjWell.cpp -o SimLYM -I ../mkl/include -I ../include -L../mkl/lib -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential -lpthread -lm
