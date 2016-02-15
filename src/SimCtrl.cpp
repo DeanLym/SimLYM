@@ -113,16 +113,19 @@ bool SimCtrl::RunSim(){
 	state_->UpdateOldState(pvt_);
 	while (sch_->GetTCurrent() < sch_->GetTEnd()){
 		Display();
-		//		cout << "Begin time step loop ..." << endl;
+		if(display_level_==2)
+			cout << "Begin time step loop ..." << endl;
 		converge = 1;
 		n_iter = 0;
 		err = min_err + 1;
 		honor_limit = 1;
 		while (err > min_err){
-			//			cout << "Begin Newton loop ..." << endl;
+			if(display_level_==2)
+				cout << "Begin Newton loop ..." << endl;
 			state_->CalParametersResidual(grid_, std_well_, pvt_, sat_, sch_);
 			for (int i = 0; i < std_well_.size(); i++){
-				//				cout << "Caluculating well residuals... " << endl;
+				if(display_level_==2)
+					cout << "Caluculating well residuals... " << endl;
 				std_well_[i]->CalParameterResidual(state_);
 			}
 			err = state_->AssembleResidual(grid_, sch_->GetDt(), std_well_);
@@ -138,12 +141,14 @@ bool SimCtrl::RunSim(){
 			state_->AssembleJacobian(grid_, sch_->GetDt(), std_well_);
 			solver_->InputResidual(state_->get_resid());
 			solver_->InputJacobian();
-			//			cout << "Solving equation..." << endl;
+			if(display_level_==2)
+				cout << "Solving equation..." << endl;
 			//			state_->OutputJacobian();
 			dx = solver_->Solve();
 			n_iter++;
 			count_newton++;
-			//			cout << "Newton Iteration " << n_iter << endl;
+			if(display_level_==2)
+				cout << "Newton Iteration " << n_iter << endl;
 			if (n_iter > max_newton_iters_){
 				converge = 0;
 				break;
@@ -156,7 +161,6 @@ bool SimCtrl::RunSim(){
 			for (int i = 0; i < std_well_.size(); i++){
 				if (!std_well_[i]->CheckLimits()){
 					honor_limit = 0;
-					//					cout << std_well_[i]->get_well_name() << " changed control mode" << endl;
 				}
 			}
 			if (honor_limit){

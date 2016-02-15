@@ -124,7 +124,6 @@ public:
 			fp >> sw_tab_[i];
 			so_tab_[i] = 1 - sw_tab_[i];
 			fp >> krw_tab_[i];
-			cout << krw_tab_[i] << endl;
 			fp >> krow_tab_[i];
 			fp >> dummy_capillary;
 		}
