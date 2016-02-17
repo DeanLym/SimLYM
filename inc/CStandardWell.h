@@ -16,7 +16,7 @@ public:
 	CStandardWell(string well_name,int block_index);
 	~CStandardWell();
 public:
-	string get_well_name();
+	string get_well_name() const;
 	bool set_r(double r);
 	bool CalWellIndex(CGrid* grid);
 	bool set_well_index(double WI);
@@ -59,14 +59,14 @@ public:
 public:
 	bool RecordResult(double t);
 public:
-	vector<double> get_TIME();
-	vector<double> get_ORAT();
-	vector<double> get_WRAT();
-	vector<double> get_BHP();
-	vector<double> get_LRAT();
-	vector<double> get_GRAT();
-	vector<double> get_WBP();
-
+	vector<double> get_TIME() const;
+	vector<double> get_ORAT() const;
+	vector<double> get_WRAT() const;
+	vector<double> get_BHP() const;
+	vector<double> get_LRAT() const;
+	vector<double> get_GRAT() const;
+	vector<double> get_WBP() const;
+	vector<double> get_WWCT() const;
 protected:
 	string well_name_;
 	STDWELLTYPE well_type_;

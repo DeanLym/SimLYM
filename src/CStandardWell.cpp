@@ -58,7 +58,7 @@ bool CStandardWell::set_r(double r){
 	r_ = r;
 	return true;
 }
-string CStandardWell::get_well_name(){
+string CStandardWell::get_well_name() const{
 	return well_name_;
 }
 bool CStandardWell::CalWellIndex(CGrid* grid){
@@ -164,25 +164,29 @@ bool  CStandardWell::RecordResult(double t){
 	return true;
 }
 
-vector<double> CStandardWell::get_TIME(){
+vector<double> CStandardWell::get_TIME() const{
 	return TIME_;
 }
-vector<double> CStandardWell::get_ORAT(){
+vector<double> CStandardWell::get_ORAT() const{
 	return ORAT_REC_;
 }
-vector<double> CStandardWell::get_WRAT(){
+vector<double> CStandardWell::get_WRAT() const{
 	return WRAT_REC_;
 }
-vector<double> CStandardWell::get_BHP(){
+vector<double> CStandardWell::get_BHP() const{
 	return BHP_REC_;
 }
-vector<double> CStandardWell::get_LRAT(){
+vector<double> CStandardWell::get_LRAT() const{
 	return LRAT_REC_;
 }
-vector<double> CStandardWell::get_GRAT(){
+vector<double> CStandardWell::get_GRAT() const{
 	return GRAT_REC_;
 }
 
-vector<double> CStandardWell::get_WBP(){
+vector<double> CStandardWell::get_WBP() const{
 	return WBP_REC_;
+}
+
+vector<double> CStandardWell::get_WWCT() const{
+	return WWCT_REC_;
 }

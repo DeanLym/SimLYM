@@ -41,7 +41,7 @@ int main(){
 	sim->sch_->SetTNext(sim->sch_->GetDt() + sim->sch_->GetTCurrent());
 	sim->sch_->SetdTmax(30.0);
 	vector<double> report_time;
-	report_time.push_back(1); report_time.push_back(2);report_time.push_back(5);
+	report_time.push_back(180.0); report_time.push_back(360.0);report_time.push_back(540.0);
 	sim->sch_->SetReportTime(3, &report_time[0]);
 
 	// initialize State
@@ -92,6 +92,13 @@ int main(){
 	sim->RunSim();
 	clock_t t3 = clock();
 	sim->OutputResult();
+
+	//
+	sim->hm_ = new CHistoryMatching;
+	sim->hm_->SetHMTarget("HIST.TXT");
+	double Sd = sim->hm_->GetDataMismatch(sim->std_well_);
+	cout << "Data mismatch is :" << Sd << endl;
+
 	delete sim;
 	clock_t t4 = clock();
 	double t_init = double(t2 - t1) / CLOCKS_PER_SEC;

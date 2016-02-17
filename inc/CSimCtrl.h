@@ -9,6 +9,7 @@
 #include "CSchedule.h"
 #include "CSTDProdWell.h"
 #include "CSTDWInjWell.h"
+#include "CHistoryMatching.hpp"
 #include <vector>
 
 using namespace std;
@@ -82,7 +83,8 @@ public:
 	CSchedule* sch_;
 	CSolver* solver_;
 	vector<CStandardWell*> std_well_;
-//	CProdWell* prod_;
+	CHistoryMatching* hm_;
+	//	CProdWell* prod_;
 
 	//Newton Iteration performance
 	vector<int> tstep_;
