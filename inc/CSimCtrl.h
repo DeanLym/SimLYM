@@ -5,6 +5,8 @@
 #include "CCartesianGrid.h"
 #include "CPVT.h"
 #include "CSAT.h"
+#include "CSAT_TABLE.h"
+#include "CSAT_COREY.hpp"
 #include "CSolver.h"
 #include "CSchedule.h"
 #include "CSTDProdWell.h"

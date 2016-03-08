@@ -31,9 +31,12 @@ int main(){
 	sim->pvt_->set_pvtw_table("PVTW.DAT");
 
 	// initialize SAT
-	sim->sat_ = new CSAT;
-	sim->sat_->SetSWOF(9,"SCAL.DAT");
+//	sim->sat_ = new CSAT_TABLE;
+//	sim->sat_->SetSWOF(9,"SCAL.DAT");
 
+	sim->sat_ = new CSAT_COREY(0.1, 0.2 ,2.0 ,2.0 ,0.5 ,0.9 );
+
+//	(double swi,double sor,double aw,double ao,double krw0,double kro0)
 	// initialize SCH
 	sim->sch_ = new CSchedule;
 	sim->sch_->SetTEnd(540.0);

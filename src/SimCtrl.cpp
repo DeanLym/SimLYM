@@ -30,6 +30,11 @@ bool SimCtrl::InitializeGrid(){
 	return true;
 }
 
+
+
+
+
+
 //bool SimCtrl::InitializeGrid(int ncell){
 //	if (grid_type_ == UNSTRUCTURED){
 //		grid_ = new CUnstructGrid(ncell);
@@ -102,7 +107,8 @@ bool SimCtrl::InitializeSolver(){
 //}
 
 bool SimCtrl::RunSim(){
-	cout << endl << "Start of Simulation!" << endl << endl;
+	if(display_level_ != 0)
+		cout << endl << "Start of Simulation!" << endl << endl;
 	double err;
 	int n_iter; int temp;
 	int converge;
@@ -203,11 +209,11 @@ bool SimCtrl::RunSim(){
 			sch_->SetTNext(sch_->GetTCurrent() + sch_->GetDt());
 		}
 	}
-
-	cout << endl << "End of Simulation!" << endl << endl;
-	cout << "Total Number of Time Steps:  " << sch_->GetStep() << endl << endl;
-	cout << "Total Number of Newton Iterations:  " << count_newton << endl << endl;
-
+	if(display_level_ != 0){
+		cout << endl << "End of Simulation!" << endl << endl;
+		cout << "Total Number of Time Steps:  " << sch_->GetStep() << endl << endl;
+		cout << "Total Number of Newton Iterations:  " << count_newton << endl << endl;
+	}
 	return true;
 }
 

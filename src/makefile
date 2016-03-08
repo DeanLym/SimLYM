@@ -1,6 +1,6 @@
 CC=icpc
 STD_FLAG=-std=c++0x
-MKL_LIBS=-lmkl_intel_ilp64 -lmkl_core -lmkl_sequential
+MKL_LIBS=-lmkl_intel_lp64 -lmkl_core -lmkl_sequential
 OTHER_LIBS=-lpthread -lm
 INCLUDE_PATH=../inc
 SHARED_LIB=libsimlym.so
