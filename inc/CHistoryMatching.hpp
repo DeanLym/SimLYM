@@ -38,7 +38,7 @@ class CStandardWell;
 class CHistoryMatching{
 public:
 	void SetHMTarget(vector<CHMTarget> hm_target);
-	void SetHMTarget(char * hist_file);
+	void SetHMTarget(const char * hist_file);
 	void cal_d_sim(const vector<CStandardWell *> well_list);
 	void InputHist(vector<double> d_obs, vector<double> std_obs);
 	void OutputHist(vector<double> d_obs, vector<double> std_obs);

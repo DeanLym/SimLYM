@@ -41,7 +41,7 @@ CHMTarget::DATA_DOMAIN  CHistoryMatching::Str2DataDomain(string str){
 	return CHMTarget::WELL;
 }
 
-void CHistoryMatching::SetHMTarget(char* hist_file){
+void CHistoryMatching::SetHMTarget(const char* hist_file){
 	ifstream in(hist_file);
 	if(!in.is_open())
 		throw runtime_error("Can not open hist file...");
