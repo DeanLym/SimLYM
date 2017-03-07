@@ -71,6 +71,10 @@ double CHistoryMatching::GetDataMismatch(const vector<CStandardWell *> well_list
 	return Sd;
 }
 
+vector<double> CHistoryMatching::GetData(const vector<CStandardWell *> well_list){
+	cal_d_sim(well_list);
+	return d_sim_;
+}
 
 void CHistoryMatching::cal_d_sim(const vector<CStandardWell *> well_list){
 	for(int i=0;i<num_data_;i++){

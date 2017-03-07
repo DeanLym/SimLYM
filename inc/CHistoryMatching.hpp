@@ -43,6 +43,7 @@ public:
 	void InputHist(vector<double> d_obs, vector<double> std_obs);
 	void OutputHist(vector<double> d_obs, vector<double> std_obs);
 	double GetDataMismatch(const vector<CStandardWell *> well_list);
+	vector<double> GetData(const vector<CStandardWell *> well_list);
 	CHMTarget::DATA_TYPE Str2DataType(string str);
 	CHMTarget::DATA_DOMAIN Str2DataDomain(string str);
 protected:

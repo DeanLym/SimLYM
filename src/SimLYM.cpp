@@ -1,17 +1,28 @@
 #include<iostream>
 #include<math.h>
 #include<string>
+#include<sstream>
 #include <ctime>
 
 using namespace std;
-#include "model3.hpp"
+#include "model1.hpp"
 #include "CSimCtrl.h"
 
 
 int main(int argc, char ** argv){
 	clock_t t1 = clock();
 	char* perm_file = argv[1];
-	SimCtrl* sim = model3(perm_file);
+	string prod_bhp_str = argv[2];
+	string inj_rate_str = argv[3];
+	stringstream ss1;
+	stringstream ss2;
+	ss1 << prod_bhp_str;
+	ss2 << inj_rate_str;
+	double prod_bhp, inj_rate;
+	ss1 >> prod_bhp;
+	ss2 >> inj_rate;
+	cout << prod_bhp << "  " << inj_rate << endl;
+	SimCtrl* sim = model1(perm_file, prod_bhp, inj_rate);
 
 	// Run Simulation
 	clock_t t2 = clock();
@@ -20,10 +31,10 @@ int main(int argc, char ** argv){
 	sim->OutputResult();
 
 	//
-	sim->hm_ = new CHistoryMatching;
-	sim->hm_->SetHMTarget("HIST.TXT");
-	double Sd = sim->hm_->GetDataMismatch(sim->std_well_);
-	cout << "Data mismatch is :" << Sd << endl;
+//	sim->hm_ = new CHistoryMatching;
+//	sim->hm_->SetHMTarget("HIST.TXT");
+//	double Sd = sim->hm_->GetDataMismatch(sim->std_well_);
+//	cout << "Data mismatch is :" << Sd << endl;
 
 	delete sim;
 	clock_t t4 = clock();
