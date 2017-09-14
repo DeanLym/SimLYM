@@ -55,7 +55,9 @@ public:
 
 public:
 	bool SetInitPres(double datumDepth, double pDatum);
+	bool SetInitPres(double *po);
 	bool SetInitSat(double Sw, double Sg);
+	bool SetInitSat(double *Sw, double *Sg);
 public:
 	bool RunSim();
 public:

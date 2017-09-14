@@ -31,7 +31,9 @@ public:
 
 	bool SetInitPres(double datumDepth, double pDatum, CPVT *PVT, CGrid *Grid);
 	bool SetInitPres(double po);
+	bool SetInitPres(double *po);
 	bool SetInitSat(double Sw, double Sg);
+	bool SetInitSat(double *Sw, double *Sg);
 	
 	const double* GetBo(){ return bo_; }
 	const double* GetBg(){ return bg_; }

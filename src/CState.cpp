@@ -266,6 +266,7 @@ CState::~CState(){
 	delete[] dporo_dpo_;
 
 }
+
 bool CState::SetInitPres(double po){
 	for (int m = 0; m < n_act_cell_; m++){
 		po_[m] = pw_[m] = po;
@@ -273,6 +274,14 @@ bool CState::SetInitPres(double po){
 
 	return true;
 }
+
+bool CState::SetInitPres(double *po){
+	for (int m = 0; m < n_act_cell_; m++){
+		po_[m] = pw_[m] = po[m];
+	}
+	return true;
+}
+
 bool CState::SetInitPres(double datumDepth, double pDatum, CPVT *PVT, CGrid *Grid){
 
 	//Construct a pressure table for interpolation;
@@ -406,6 +415,19 @@ bool CState::SetInitSat(double Sw, double Sg){
 	}
 	return 1;
 }
+
+bool CState::SetInitSat(double *Sw, double *Sg){
+	// Only for simple cases with homogenous initial saturation field.
+	double So;
+
+	for (int i = 0; i < n_act_cell_; i++){
+		So = 1 - Sw[i] - Sg[i];
+		sw_[i] = Sw[i];
+		so_[i] = So;
+	}
+	return 1;
+}
+
 
 bool CState::CalDPhiOil(CGrid* Grid){
 	// Calculate Potential Difference;

@@ -78,11 +78,26 @@ bool SimCtrl::SetInitPres(double datumDepth, double pDatum)
 	return true;
 }
 
+bool SimCtrl::SetInitPres(double *po)
+{
+	state_->SetInitPres(po);
+	return true;
+}
+
+
 bool SimCtrl::SetInitSat(double Sw, double Sg)
 {
 	state_->SetInitSat(Sw,Sg);
 	return true;
 }
+
+
+bool SimCtrl::SetInitSat(double *Sw, double *Sg)
+{
+	state_->SetInitSat(Sw, Sg);
+	return true;
+}
+
 
 
 bool SimCtrl::InitializeSolver(){

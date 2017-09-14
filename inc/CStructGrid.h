@@ -7,7 +7,6 @@
 
 using namespace::std;
 
-
 class CStructGrid : public CGrid{
 public:
 	CStructGrid(int nx, int ny, int nz) :
@@ -44,6 +43,8 @@ public:
 	bool InputKx(char *file_name){
 		ifstream in;
 		in.open(file_name);
+		string temp;
+		in >> temp;
 		for (int i = 0; i < ncell_; i++){
 			in >> kx_[i];
 		}
@@ -58,6 +59,8 @@ public:
 	bool InputKy(char *file_name){
 		ifstream in;
 		in.open(file_name);
+		string temp;
+		in >> temp;
 		for (int i = 0; i < ncell_; i++){
 			in >> ky_[i];
 		}
@@ -77,6 +80,8 @@ public:
 	bool InputKz(char *file_name){
 		ifstream in;
 		in.open(file_name);
+		string temp;
+		in >> temp;
 		for (int i = 0; i < ncell_; i++){
 			in >> kz_[i];
 		}
