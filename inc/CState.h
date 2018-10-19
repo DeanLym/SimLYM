@@ -20,6 +20,11 @@ class CStandardWell;
 
 class CState{
 public:
+	static const double g_ = 32.2;
+	static const double gc = 32.2;
+	static const double beta = 0.0069444444;
+	static const double M = 5.615;
+public:
 	CState(SimCtrl::PHASETYPE phase, CGrid *Grid, CPVT* PVT);
 	~CState();
 	int get_nconns(){ return nconns_; }
@@ -32,8 +37,13 @@ public:
 	bool SetInitPres(double datumDepth, double pDatum, CPVT *PVT, CGrid *Grid);
 	bool SetInitPres(double po);
 	bool SetInitPres(double *po);
+	bool SetInitPres(char *po_file);
+
 	bool SetInitSat(double Sw, double Sg);
 	bool SetInitSat(double *Sw, double *Sg);
+	bool SetInitSat(char *Sw_file, char *Sg_file);
+	bool SetInitSw(char *Sw_file);
+	bool SetInitSg(char *Sg_file);
 	
 	const double* GetBo(){ return bo_; }
 	const double* GetBg(){ return bg_; }
@@ -123,6 +133,8 @@ public:
 	bool CalDGammaODPo();
 	bool CalDGammaWDPw();
 
+	bool CalDPoroDPo(CGrid *Grid);
+
 	double CalResidualNormInf(CGrid *Grid, double dt);
 
 	double AssembleResidual(CGrid* Grid, double dt, vector<CStandardWell*> &std_well);
@@ -151,7 +163,7 @@ public:
 	// Functions for test phase 3a
 	void InputData();
 	void OutputJacobian();
-
+	void GenerateRestartFile();
 private:
     //==========================================================
 	int n_act_cell_ , nconns_;
@@ -173,6 +185,7 @@ private:
     double *pw_n_, *pg_n_, *po_n_;
 
     // Non-derivative properties
+    double *poro_, *poro_n_;
 	double *bo_, *bg_, *bw_;
     double *bo_n_,*bg_n_,*bw_n_;
     double *kro_, *krg_, *krw_;
@@ -218,10 +231,7 @@ private:
     MatrixBlock* jaco_ud_; // Connection-wise
     MatrixBlock* jaco_ld_; // Connection-wise
 
-	const double g_ = 32.2;
-	const double gc = 32.2;
-	const double beta = 0.0069444444;
-	const double M = 5.615;
+
 
 };
 

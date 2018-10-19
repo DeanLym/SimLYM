@@ -12,6 +12,8 @@ using std::string;
 
 class CPVT{
 public:
+	static const double p_ref_ = 14.7;
+public:
 
 	CPVT()
 :po_tab_(NULL),
@@ -356,6 +358,7 @@ public:
 				}
 			}
 		}
+		return 0.0;
 	}
 private:
 
@@ -372,8 +375,6 @@ private:
 	double *dbg_dpg_tab_, *dvg_dpg_tab_;
 	double buble_point_pressure_;
 	double pw_ref_,bw_ref_,cw_, vw_ref_, cv_;
-
-	const double p_ref_ = 14.7;
 
 	int nr_pvt_gas_;
 

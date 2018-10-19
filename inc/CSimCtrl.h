@@ -56,12 +56,16 @@ public:
 public:
 	bool SetInitPres(double datumDepth, double pDatum);
 	bool SetInitPres(double *po);
+	bool SetInitPres(char *po_file);
 	bool SetInitSat(double Sw, double Sg);
 	bool SetInitSat(double *Sw, double *Sg);
+	bool SetInitSw(char* Sw_file);
+	bool SetInitSg(char* Sg_file);
 public:
 	bool RunSim();
 public:
 	bool OutputResult();
+	bool GenerateRestartFile();
 public:
 	bool Display();
 public:
@@ -99,6 +103,7 @@ public:
 
 public:
 	int display_level_;
+	int state_report_;
 };
 
 #endif

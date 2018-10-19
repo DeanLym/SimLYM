@@ -6,17 +6,16 @@
 #include <stdexcept>
 
 using namespace std;
-#include "model1.hpp"
+#include "model_cr.hpp"
 #include "CSimCtrl.h"
 
 
 int main(int argc, char ** argv){
 	clock_t t1 = clock();
-	if(argc<3)
+	if(argc<2)
 		throw runtime_error("No perm file or rel-perm file specified.");
 	char* perm_file = argv[1];
-	char* kr_file   = argv[2];
-	SimCtrl* sim = model1(perm_file,kr_file);
+	SimCtrl* sim = model1(perm_file);
 
 	// Run Simulation
 	clock_t t2 = clock();

@@ -13,17 +13,26 @@ using namespace std;
 
 class CGrid{
 public:
+	//Constants
+	static const double beta = 0.006944;
+	static const double alpha = 0.001127;
+
+public:
 
 	CGrid(int ncell){
 		ncell_ = ncell;
 		poro_= new double[ncell_];
 		memset(poro_, 0, ncell_*sizeof(double));
+		poro_n_= new double[ncell_];
+		memset(poro_n_, 0, ncell_*sizeof(double));
 		v_ = new double[ncell_];
 		memset(v_, 0, ncell_*sizeof(double));
 		d_ = new double[ncell_];
 		memset(d_, 0, ncell_*sizeof(double));
 		dmin_ = 1e8;
 		dmax_ = -1e8;
+		cr_ = 0;
+		p_ref_ = 1;
 	}
 
 	int get_ncell(){
@@ -38,6 +47,16 @@ public:
 		for (int i = 0; i < ncell_; i++){
 			poro_[i] = poro;
 		}
+		return true;
+	}
+
+	bool InputCr(double cr){
+		cr_ = cr;
+		return true;
+	}
+
+	bool InputPref(double p_ref){
+		p_ref_ = p_ref;
 		return true;
 	}
 
@@ -97,7 +116,23 @@ public:
 	}
 
     const double* GetPoro(){
-        return poro_;
+    	return poro_;
+    }
+
+    bool GetPoro(double *po, double* poro){
+    	double dp;
+    	for(int i=0; i < ncell_; i++){
+    		dp = po[i] - p_ref_;
+    		poro[i] = poro_[i]*(1+cr_*dp+0.5*cr_*cr_*dp*dp);
+    	}
+    	return true;
+    }
+
+    bool GetDPoroDPo(double *po, double *dporo_dpo){
+    	for(int i=0; i < ncell_; i++){
+    		dporo_dpo[i] = poro_[i]*cr_*(1+cr_*(po[i] - p_ref_));
+    	}
+    	return true;
     }
 
 	double GetVolume(int k){
@@ -176,9 +211,11 @@ public:
 	double GetdMax(){
 		return dmax_;
     }
+
 	double GetdMin(){
 		return dmin_;
-    }
+	}
+
     const double* GetDeltaD(){
         return delta_d_;
     }
@@ -232,6 +269,7 @@ public:
 public:
 	~CGrid(){
 		delete[] poro_;
+		delete[] poro_n_;
 		delete[] v_;
 		delete[] delta_d_;
 		delete[] d_;
@@ -242,7 +280,11 @@ protected:
 	int nconns_;
 //	vector<double> poro_;
 	double* poro_;
-//	vector<double> v_;
+	double* poro_n_;
+	double p_ref_;
+	double cr_;
+
+	//	vector<double> v_;
 	double* v_;
 //	vector<double> d_;
 	double* d_;
@@ -252,9 +294,7 @@ protected:
 	double dmin_;
 	double dmax_;
 
-	//Constants
-	const double beta = 0.006944;
-	const double alpha = 0.001127;
+
 };
 
 #endif

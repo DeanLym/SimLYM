@@ -17,7 +17,8 @@ SimCtrl::SimCtrl()
  preconditioner_(NA),
  max_newton_iters_(10),
  min_err(1e-3),
- display_level_(1)
+ display_level_(1),
+ state_report_(1)
 {
 
 }
@@ -85,6 +86,13 @@ bool SimCtrl::SetInitPres(double *po)
 }
 
 
+bool SimCtrl::SetInitPres(char *po_file)
+{
+	state_->SetInitPres(po_file);
+	return true;
+}
+
+
 bool SimCtrl::SetInitSat(double Sw, double Sg)
 {
 	state_->SetInitSat(Sw,Sg);
@@ -99,6 +107,15 @@ bool SimCtrl::SetInitSat(double *Sw, double *Sg)
 }
 
 
+bool SimCtrl::SetInitSw(char* Sw_file){
+	state_->SetInitSw(Sw_file);
+	return true;
+}
+
+bool SimCtrl::SetInitSg(char* Sg_file){
+	state_->SetInitSg(Sg_file);
+	return true;
+}
 
 bool SimCtrl::InitializeSolver(){
 	if (linear_solver_ == PARDISO){
@@ -199,15 +216,14 @@ bool SimCtrl::RunSim(){
 				cfl_.push_back(state_->CalCFLOW(grid_, dt));
 				dt_.push_back(dt);
 
-
-//				for (int i = 0; i < sch_->get_num_report_times(); i++){
-//					if (sch_->GetTCurrent() == sch_->get_report_time(i)){
-//						state_->State_Report(sch_, i + 1);
-//						break;
-//					}
-//				}
-
-
+				if (state_report_){
+					for (int i = 0; i < sch_->get_num_report_times(); i++){
+						if (sch_->GetTCurrent() == sch_->get_report_time(i)){
+							state_->State_Report(sch_, i + 1);
+							break;
+						}
+					}
+				}
 				//Summary
 				//				cout << "Time step:" << sch_->GetStep() << "  Current Time" << sch_->GetTCurrent() << endl << endl;
 			}
@@ -282,6 +298,12 @@ bool SimCtrl::OutputResult(){
 
 	out.close();
 
+	return true;
+}
+
+
+bool SimCtrl::GenerateRestartFile(){
+	state_->GenerateRestartFile();
 	return true;
 }
 

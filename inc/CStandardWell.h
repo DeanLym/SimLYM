@@ -12,6 +12,8 @@ class CStandardWell{
 public:
 	enum CTRLMODE{CBHP,CORAT,CWRAT,CLRAT,CGRAT};
 	enum STDWELLTYPE{STDPROD,STDWINJ};
+	static const double PI = 3.141592653;
+	static const double alpha = 0.001127;
 public:
 	CStandardWell(string well_name,int block_index);
 	~CStandardWell();
@@ -93,8 +95,6 @@ protected:
 	CTRLMODE ctrl_mode_;
 	double TL_ORAT_, TL_WRAT_, TL_GRAT_, TL_BHP_, TL_LRAT_;
 
-	const double PI = 3.141592653;
-	const double alpha = 0.001127;
 
 	//Result vector
 	vector<double> TIME_;
