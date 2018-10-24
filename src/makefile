@@ -1,4 +1,4 @@
-CC=icpc
+CC=g++
 STD_FLAG=-std=c++0x
 MKL_LIBS=-lmkl_intel_lp64 -lmkl_core -lmkl_sequential
 OTHER_LIBS=-lpthread -lm
