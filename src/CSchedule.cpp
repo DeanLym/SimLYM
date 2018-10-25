@@ -53,22 +53,49 @@ void CSchedule::CalNewDt(CState *State, int converge){
 				break;
 			}
 		}
-
 	} // Only suitable for two phase problems
 };
 
 void CSchedule::SetReportTime(int num_report_times, double tstep){
 	num_report_times_ = num_report_times;
-	report_time_ = new double[num_report_times_];
+//	report_time_ = new double[num_report_times_];
+	report_time_.clear();
+	report_time_.resize(num_report_times_);
 	report_time_[0] = tstep;
-	for (int i = 1; i < num_report_times_; i++){
-		report_time_[i] = report_time_[i] + tstep;
+	for (int i = 0; i < num_report_times_ - 1; i++){
+		report_time_.push_back(report_time_[i] + tstep);
 	}
 }
 
-void CSchedule::SetReportTime(int num_report_times, double * report_time){
+void CSchedule::SetReportTime(int num_report_times, double* report_time){
 	num_report_times_ = num_report_times;
-	report_time_ = new double[num_report_times_];
+//	report_time_ = new double[num_report_times_];
+	report_time_.clear();
+	report_time_.resize(num_report_times_);
 	for (int i = 0; i < num_report_times_; i++)
 		report_time_[i] = report_time[i];
 }
+
+void CSchedule::InsertReportTime(double new_time){
+	if(report_time_.empty()){
+		report_time_.push_back(new_time);
+		num_report_times_+= 1;
+	}else{
+		for(int k =0; k < report_time_.size(); k++){
+			if (new_time < report_time_[k]){
+				report_time_.insert(report_time_.begin()+k, new_time);
+				num_report_times_ += 1;
+				break;
+			}else if(new_time == report_time_[k]){
+				break;
+			}
+			if(k == (report_time_.size()-1)){
+				cout << "abc" << endl;
+				report_time_.push_back(new_time);
+				num_report_times_ += 1;
+			}
+		}
+	}
+}
+
+

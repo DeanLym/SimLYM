@@ -281,6 +281,7 @@ bool CSTDProdWell::CalDqwDsw(CState *State){
 }
 
 bool CSTDProdWell::CheckLimits(){
+	// Currently only allow two type of controls
 	switch (ctrl_mode_)
 	{
 	case CStandardWell::CBHP:

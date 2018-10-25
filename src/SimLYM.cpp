@@ -24,10 +24,10 @@ int main(int argc, char ** argv){
 	sim->OutputResult();
 
 	//
-	sim->hm_ = new CHistoryMatching;
-	sim->hm_->SetHMTarget("HIST.TXT");
-	double Sd = sim->hm_->GetDataMismatch(sim->std_well_);
-	cout << "Data mismatch is :" << Sd << endl;
+//	sim->hm_ = new CHistoryMatching;
+//	sim->hm_->SetHMTarget("HIST.TXT");
+//	double Sd = sim->hm_->GetDataMismatch(sim->std_well_);
+//	cout << "Data mismatch is :" << Sd << endl;
 
 	delete sim;
 	clock_t t4 = clock();

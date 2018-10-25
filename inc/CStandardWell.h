@@ -30,6 +30,9 @@ public:
 	bool set_TL_WRAT(double TL_WRAT);
 	bool set_TL_GRAT(double TL_GRAT);
 	bool set_TL_LRAT(double TL_LRAT);
+	bool insert_multistage_control(double start_time, CTRLMODE ctrl_mode, double target);
+	bool update_control(double t);
+	bool remove_control_stage(double t);
 public:
 	double get_qo();
 	double get_qw();
@@ -95,7 +98,12 @@ protected:
 	CTRLMODE ctrl_mode_;
 	double TL_ORAT_, TL_WRAT_, TL_GRAT_, TL_BHP_, TL_LRAT_;
 
-
+	//=================================
+	// multi-stage control target
+	vector<double> multistage_start_time;
+	vector<double> multistage_target;
+	vector<double> multistage_limit;
+	vector<CTRLMODE> multistage_control_mode;
 	//Result vector
 	vector<double> TIME_;
 	vector<double> ORAT_REC_;

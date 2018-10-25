@@ -149,8 +149,20 @@ bool SimCtrl::RunSim(){
 	double solver_time = 0.0;
 	int count_newton = 0;
 	state_->UpdateOldState(pvt_);
+	bool change_dt;
 	while (sch_->GetTCurrent() < sch_->GetTEnd()){
+		change_dt = false;
 		Display();
+		for (int i = 0; i < std_well_.size(); i++){
+			if (std_well_[i]->update_control(sch_->GetTCurrent())){
+				change_dt = true;
+			}
+		}
+		if(change_dt){
+//			cout << ""
+			sch_ -> SetDt(0.01);
+			sch_ -> SetTNext(sch_->GetTCurrent() + sch_->GetDt());
+		}
 		if(display_level_==2)
 			cout << "Begin time step loop ..." << endl;
 		converge = 1;
@@ -197,6 +209,7 @@ bool SimCtrl::RunSim(){
 		}
 		if (converge == 1){
 			for (int i = 0; i < std_well_.size(); i++){
+				std_well_[i]->remove_control_stage(sch_->GetTCurrent());
 				if (!std_well_[i]->CheckLimits()){
 					honor_limit = 0;
 				}

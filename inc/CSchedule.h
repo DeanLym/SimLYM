@@ -3,8 +3,10 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <vector>
 class CState;
 
+using namespace::std;
 
 class CSchedule{
 public:
@@ -13,6 +15,7 @@ public:
 	void SetdTmax(double dtmax){ dTmax = dtmax; }
 	void SetReportTime(int _RepTimes, double tstep);
 	void SetReportTime(int num_report_times, double * report_time);
+	void InsertReportTime(double new_time);
 
 	double GetTEnd(){ return tEnd; }
 	double GetTStart(){ return tStart; }
@@ -21,6 +24,7 @@ public:
 	void SetTCurrent(double t){ tCur = t; }
 	void SetTNext(double t){ tNext = t; }
 	double GetDt(){ return dT; }
+	void SetDt(double dt){ dT = dt;}
 	void CalNewDt(CState *State, int converge);
 	double GetTCurrent(){ return tCur; }
 	double GetTNext(){ return tNext; }
@@ -43,7 +47,7 @@ public:
 	}
 private:
 	int num_report_times_;
-	double *report_time_;
+	vector<double> report_time_;
 	double currentReportTime;
 	int currentReportStep;
 	double dTold, dT, dTmax;

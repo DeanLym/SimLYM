@@ -150,6 +150,90 @@ bool CStandardWell::set_TL_GRAT(double TL_GRAT){
 	TL_GRAT_ = TL_GRAT;
 	return true;
 }
+//=================================================
+bool CStandardWell::insert_multistage_control(double start_time, CTRLMODE ctrl_mode, double target){
+	if(multistage_start_time.empty()){
+		multistage_start_time.push_back(start_time);
+		multistage_control_mode.push_back(ctrl_mode);
+		multistage_target.push_back(target);
+	}else{
+		for(int k =0; k < multistage_start_time.size(); k++){
+			if (start_time < multistage_start_time[k]){
+				multistage_start_time.insert(multistage_start_time.begin()+k, start_time);
+				multistage_control_mode.insert(multistage_control_mode.begin()+k, ctrl_mode);
+				multistage_target.insert(multistage_target.begin()+k, target);
+				break;
+			}else if(start_time == multistage_start_time[k]){
+				break;
+			}
+			if(k == (multistage_start_time.size()-1)){
+				multistage_start_time.push_back(start_time);
+				multistage_control_mode.push_back(ctrl_mode);
+				multistage_target.push_back(target);
+			}
+		}
+	}
+	return true;
+}
+
+
+bool CStandardWell::update_control(double t){
+	double eps = 0.00001;
+	string control_mode;
+	if(!multistage_start_time.empty()){
+		if(t >= multistage_start_time[0] || fabs(t - multistage_start_time[0]) < eps){
+
+			set_ctrl_mode(multistage_control_mode[0]);
+
+			switch(multistage_control_mode[0])	{
+			case CStandardWell::CBHP:
+				set_TL_BHP(multistage_target[0]);
+				BHP_ = multistage_target[0];
+				control_mode = "BHP";
+				break;
+			case CStandardWell::CORAT:
+				set_TL_ORAT(multistage_target[0]);
+				ORAT_ = multistage_target[0];
+				control_mode = "ORAT";
+				break;
+			case CStandardWell::CWRAT:
+				set_TL_WRAT(multistage_target[0]);
+				WRAT_ = multistage_target[0];
+				control_mode = "WRAT";
+				break;
+			case CStandardWell::CLRAT:
+				set_TL_LRAT(multistage_target[0]);
+				LRAT_ = multistage_target[0];
+				control_mode = "LRAT";
+				break;
+			case CStandardWell::CGRAT:
+				set_TL_GRAT(multistage_target[0]);
+				GRAT_ = multistage_target[0];
+				control_mode = "GRAT";
+				break;
+			default:
+				break;
+			}
+			cout<< well_name_ << " switch to constant "  << control_mode << " of " << multistage_target[0] << " at day " << t << endl;
+			return true;
+		}
+		return false;
+	}
+	return false;
+}
+
+bool CStandardWell::remove_control_stage(double t){
+	double eps = 0.00001;
+	if(!multistage_start_time.empty()){
+		if (t >= multistage_start_time[0] || fabs(t - multistage_start_time[0]) < eps){
+//		if (t >= multistage_start_time[0]){
+			multistage_start_time.erase(multistage_start_time.begin());
+			multistage_control_mode.erase(multistage_control_mode.begin());
+			multistage_target.erase(multistage_target.begin());
+		}
+	}
+	return true;
+}
 
 //=================================================
 bool  CStandardWell::RecordResult(double t){
