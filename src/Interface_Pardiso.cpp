@@ -162,8 +162,8 @@ int MKLPardiso::BackSubstitute(int n, double* a, int* ia, int* ja, double* b){
 
 int MKLPardiso::Pardiso_Solve(int n, double* a, int* ia, int* ja, double* b) 
 {
-    if(n>9999)
-        cout<<" Direct factorization...";
+    // if(n>9999)
+    //     cout<<" Direct factorization...";
 
     Pardiso_Factor(n, a, ia, ja);
    BackSubstitute(n, a, ia, ja, b);
