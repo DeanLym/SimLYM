@@ -10,6 +10,9 @@
 #include <iostream>
 #include <vector>
 #include "CMatrixBlock.h"
+#include "H5Cpp.h"
+
+using namespace H5;
 
 using namespace std;
 
@@ -112,6 +115,7 @@ public:
     bool UpdateOldState(CPVT *PVT);
 	void ChangeBackState();
 
+    void Init_State_Report(int state_report);
 	void State_Report(CSchedule *SCH,int n);
 	void State_Debug();
 	void Var_Debug(double *var, int n, char* fn);
@@ -231,6 +235,9 @@ private:
     MatrixBlock* jaco_ud_; // Connection-wise
     MatrixBlock* jaco_ld_; // Connection-wise
 
+    H5File *state_report_file_;
+    DataSpace *state_report_data_space_;
+    int state_report_;
 
 
 };

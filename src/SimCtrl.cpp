@@ -150,6 +150,7 @@ bool SimCtrl::RunSim(){
 	int count_newton = 0;
 	state_->UpdateOldState(pvt_);
 	bool change_dt;
+	state_ -> Init_State_Report(state_report_);
 	while (sch_->GetTCurrent() < sch_->GetTEnd()){
 		change_dt = false;
 		Display();

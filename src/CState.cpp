@@ -29,6 +29,8 @@ CState::CState(SimCtrl::PHASETYPE phase, CGrid *Grid, CPVT* PVT){
 	denw_std_ = PVT->GetDenW_Std();
 	//	num_comps_ = num_comps;
 
+    state_report_file_ = NULL;
+    state_report_ = 1;
 
 	phase_type_ = phase;
 
@@ -178,6 +180,8 @@ CState::CState(SimCtrl::PHASETYPE phase, CGrid *Grid, CPVT* PVT){
 }
 
 CState::~CState(){
+    delete state_report_file_;
+    delete state_report_data_space_;
 
 	delete[] resid_;
 	delete[] jaco_d_;
@@ -782,28 +786,57 @@ void CState::ChangeBackState(){//When convergence fails
 //	}*/
 //}
 
-void CState::State_Report(CSchedule *SCH, int n){
-	ostringstream abc;
-	abc << "p";
-	abc << n;
-	string file_name;
-	file_name = abc.str();
-	ofstream out(file_name.c_str());
-	for (int n = 0; n < n_act_cell_; n++){
-		out << po_[n] << endl;
-	}
-	out.close();
+void CState::Init_State_Report(int state_report){
+    state_report_ = state_report;
+    if (state_report == 2){
+        state_report_file_ = new H5File("state.h5", H5F_ACC_TRUNC);
+        const int RANK = 1;
+        hsize_t dims[1];
+        dims[0] = n_act_cell_;
+        state_report_data_space_ = new DataSpace(RANK, dims);
+    }
+}
 
-	ostringstream ab;
-	ab << "sw";
-	ab << n;
-	string file_name2;
-	file_name2 = ab.str();
-	ofstream out2(file_name2.c_str());
-	for (int n = 0; n < n_act_cell_; n++){
-		out2 << sw_[n] << endl;
-	}
-	out2.close();
+void CState::State_Report(CSchedule *SCH, int n){
+    ostringstream abc;
+    abc << "p";
+    abc << n;
+    string file_name;
+    file_name = abc.str();
+    ostringstream ab;
+    ab << "sw";
+    ab << n;
+    string file_name2;
+    file_name2 = ab.str();
+
+    if(state_report_ == 2){
+        FloatType datatype( PredType::NATIVE_DOUBLE );
+        datatype.setOrder( H5T_ORDER_LE );
+
+        const H5std_string ds_name_p(file_name.c_str());
+        DataSet dataset_p = state_report_file_ -> createDataSet(ds_name_p, datatype, *state_report_data_space_);
+        dataset_p.write(po_, PredType::NATIVE_DOUBLE);
+
+        const H5std_string ds_name_sw(file_name2.c_str());
+        DataSet dataset_sw = state_report_file_ -> createDataSet(ds_name_sw, datatype, *state_report_data_space_);
+        dataset_sw.write(sw_, PredType::NATIVE_DOUBLE);
+
+    }else{
+        
+        ofstream out(file_name.c_str());
+        for (int n = 0; n < n_act_cell_; n++){
+            out << po_[n] << endl;
+        }
+        out.close();
+
+
+        ofstream out2(file_name2.c_str());
+        for (int n = 0; n < n_act_cell_; n++){
+            out2 << sw_[n] << endl;
+        }
+        out2.close();        
+    }
+
 
 }
 
