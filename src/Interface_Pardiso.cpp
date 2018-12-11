@@ -169,10 +169,11 @@ int MKLPardiso::Pardiso_Solve(int n, double* a, int* ia, int* ja, double* b)
    BackSubstitute(n, a, ia, ja, b);
     if (error != 0){
         cout<<" Pardiso error code: "<<error<<endl;
-    } else {
-        if(n>9999)
-            cout<< " Complete." <<endl;
-    }
+    } 
+    // else {
+    //     if(n>9999)
+    //         cout<< " Complete." <<endl;
+    // }
     return error;
 }
 
