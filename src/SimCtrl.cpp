@@ -237,7 +237,7 @@ bool SimCtrl::RunSim(){
 							break;
 						}
 					}
-				}else if(state_report_ == 2){
+				}else if(state_report_ == 2 || state_report_ == 3){
 						state_->State_Report(sch_, sch_->GetStep());
 				}
 				//Summary

@@ -788,7 +788,7 @@ void CState::ChangeBackState(){//When convergence fails
 
 void CState::Init_State_Report(int state_report){
     state_report_ = state_report;
-    if (state_report == 2){
+    if (state_report == 3){
         state_report_file_ = new H5File("state.h5", H5F_ACC_TRUNC);
         const int RANK = 1;
         hsize_t dims[1];
@@ -808,17 +808,16 @@ void CState::State_Report(CSchedule *SCH, int n){
     ab << n;
     string file_name2;
     file_name2 = ab.str();
-
-    if(state_report_ == 2){
-        FloatType datatype( PredType::NATIVE_DOUBLE );
-        datatype.setOrder( H5T_ORDER_LE );
+    // cout << state_report_ << endl;
+    if(state_report_ == 3){
+        // cout << "Writing HDF5 file" << endl;
 
         const H5std_string ds_name_p(file_name.c_str());
-        DataSet dataset_p = state_report_file_ -> createDataSet(ds_name_p, datatype, *state_report_data_space_);
+        DataSet dataset_p = state_report_file_->createDataSet(ds_name_p, PredType::NATIVE_DOUBLE, *state_report_data_space_);
         dataset_p.write(po_, PredType::NATIVE_DOUBLE);
 
         const H5std_string ds_name_sw(file_name2.c_str());
-        DataSet dataset_sw = state_report_file_ -> createDataSet(ds_name_sw, datatype, *state_report_data_space_);
+        DataSet dataset_sw = state_report_file_->createDataSet(ds_name_sw, PredType::NATIVE_DOUBLE, *state_report_data_space_);
         dataset_sw.write(sw_, PredType::NATIVE_DOUBLE);
 
     }else{
