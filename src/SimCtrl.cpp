@@ -141,6 +141,9 @@ bool SimCtrl::InitializeSolver(){
 bool SimCtrl::RunSim(){
 	if(display_level_ != 0)
 		cout << endl << "Start of Simulation!" << endl << endl;
+
+
+
 	double err;
 	int n_iter; int temp;
 	int converge;
@@ -151,6 +154,9 @@ bool SimCtrl::RunSim(){
 	state_->UpdateOldState(pvt_);
 	bool change_dt;
 	state_ -> Init_State_Report(state_report_);
+    if(state_report_ == 2 || state_report_ == 3){
+        state_->State_Report(sch_, 0);
+    }
 	while (sch_->GetTCurrent() < sch_->GetTEnd()){
 		change_dt = false;
 		Display();
