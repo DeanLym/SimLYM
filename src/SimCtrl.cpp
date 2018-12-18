@@ -236,14 +236,14 @@ bool SimCtrl::RunSim(){
 				cfl_.push_back(state_->CalCFLOW(grid_, dt));
 				dt_.push_back(dt);
 
-				if (state_report_ == 1){
+				if (state_report_ == 1 || state_report_ == 2){
 					for (int i = 0; i < sch_->get_num_report_times(); i++){
 						if (sch_->GetTCurrent() == sch_->get_report_time(i)){
 							state_->State_Report(sch_, i + 1);
 							break;
 						}
 					}
-				}else if(state_report_ == 2 || state_report_ == 3){
+				}else if(state_report_ == 3){
 						state_->State_Report(sch_, sch_->GetStep());
 				}
 				//Summary
