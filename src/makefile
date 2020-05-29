@@ -1,9 +1,10 @@
-CC=icpc
+CC=gcc
 STD_FLAG=-std=c++0x
 MKL_LIBS=-lmkl_intel_lp64 -lmkl_core -lmkl_sequential
 OTHER_LIBS=-lpthread -lm
 INCLUDE_PATH=../inc
-HDF5_INC=/data/cees/yiminliu/packages/hdf5/include
+HDF5_INC=../inc/hdf5/
+MKL_INC=../inc/mkl/
 SHARED_LIB=libsimlym.so
 STATIC_LIB=libsimlym.a
 OBJ=SimCtrl.o Interface_Pardiso.o CMatrixBlock.o CPardisoSolver.o CSchedule.o CStandardWell.o CSTDProdWell.o CSTDWInjWell.o CState.o CHistoryMatching.o
@@ -11,16 +12,16 @@ OBJ=SimCtrl.o Interface_Pardiso.o CMatrixBlock.o CPardisoSolver.o CSchedule.o CS
 all: SimCtrl.so
 
 SimCtrl.so: 
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c SimCtrl.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c Interface_Pardiso.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CMatrixBlock.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CPardisoSolver.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CSchedule.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CStandardWell.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CState.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CSTDProdWell.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CSTDWInjWell.cpp
-	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -fPIC -c CHistoryMatching.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c SimCtrl.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c Interface_Pardiso.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c CMatrixBlock.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c CPardisoSolver.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c CSchedule.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c CStandardWell.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c CState.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC) -I $(MKL_INC) -fPIC -c CSTDProdWell.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC)  -I $(MKL_INC) -fPIC -c CSTDWInjWell.cpp
+	$(CC) $(STD_FLAG) -I $(INCLUDE_PATH) -I $(HDF5_INC)  -I $(MKL_INC) -fPIC -c CHistoryMatching.cpp
 	
 	$(CC) $(STD_FLAG) -shared -Wl,-soname,$(SHARED_LIB) -o $(SHARED_LIB) $(OBJ)
 	ar -cvq $(STATIC_LIB) $(OBJ)

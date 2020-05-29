@@ -12,8 +12,8 @@ class CStandardWell{
 public:
 	enum CTRLMODE{CBHP,CORAT,CWRAT,CLRAT,CGRAT};
 	enum STDWELLTYPE{STDPROD,STDWINJ};
-	static const double PI = 3.141592653;
-	static const double alpha = 0.001127;
+	static constexpr double PI = 3.141592653;
+	static constexpr double alpha = 0.001127;
 public:
 	CStandardWell(string well_name,int block_index);
 	~CStandardWell();

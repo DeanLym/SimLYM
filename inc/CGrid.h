@@ -14,8 +14,8 @@ using namespace std;
 class CGrid{
 public:
 	//Constants
-	static const double beta = 0.006944;
-	static const double alpha = 0.001127;
+	static constexpr double beta = 0.006944;
+	static constexpr double alpha = 0.001127;
 
 public:
 

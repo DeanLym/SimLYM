@@ -12,7 +12,7 @@ using std::string;
 
 class CPVT{
 public:
-	static const double p_ref_ = 14.7;
+	static constexpr double p_ref_ = 14.7;
 public:
 
 	CPVT()

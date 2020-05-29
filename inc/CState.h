@@ -24,10 +24,10 @@ class CStandardWell;
 
 class CState{
 public:
-	static const double g_ = 32.2;
-	static const double gc = 32.2;
-	static const double beta = 0.0069444444;
-	static const double M = 5.615;
+	static constexpr double g_ = 32.2;
+	static constexpr double gc = 32.2;
+	static constexpr double beta = 0.0069444444;
+	static constexpr double M = 5.615;
 public:
 	CState(SimCtrl::PHASETYPE phase, CGrid *Grid, CPVT* PVT);
 	~CState();
