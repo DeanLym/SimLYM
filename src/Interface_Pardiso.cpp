@@ -1,12 +1,3 @@
-/** 
- * @file    Interface_Pardiso.cpp
- * @author  Li, Xiang
- * @date    2011/10
- * @brief      
- * @version 
- * Copyright (c) 2013, Reservoir Simulation Lab, COE, PKU.
- */
-
 #include <iostream>
 #include <stdio.h>
 #include "Interface_Pardiso.h"
