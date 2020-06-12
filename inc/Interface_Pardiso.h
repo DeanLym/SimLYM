@@ -1,12 +1,3 @@
-/** 
- * @file    Interface_Pardiso.h
- * @author  Li, Xiang
- * @date    2011/10
- * @brief   Pardiso INIT, FACTOR, and BACKSOLVE
- *    
- * @version 
- * Copyright (c) 2013, Reservoir Simulation Lab, COE, PKU.
- */
 #ifndef Interface_Pardiso_h__
 #define Interface_Pardiso_h__
 
